@@ -13,4 +13,16 @@ public enum Task {
 
     /// A requests body set with data.
     case requestData(Data)
+
+    /// A request body set with `Encodable` type.
+    case requestEncodable(Encodable)
+
+    /// A request body set with `Encodable` type and a custom encoder.
+    case requestEncodable(Encodable, encoder: JSONEncoder)
+
+    /// A requests body set with encoded parameters.
+    case requestParameters([String: Any])
+
+    /// A requests body set with encoded parameters and a custom encoder.
+    case requestParameters([String: Any], encoder: ParameterEncoder)
 }

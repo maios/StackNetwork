@@ -78,9 +78,22 @@ open class NetworkProvider<Target: TargetType>: NetworkProviderType {
         request.httpMethod = target.method.rawValue
         target.headers?.forEach { request.addValue($0.value, forHTTPHeaderField: $0.key) }
 
-        // TODO: Encode data.
+        switch target.task {
+        case .requestPlain: break
+        case .requestData(let data): request.httpBody = data
+        case .requestEncodable(let encodable):
+            try encode(request: &request, with: encodable.0, using: encodable.encoder)
+        case .requestParameters(let encodable):
+            try encode(request: &request, with: encodable.0, using: encodable.encoder)
+        }
 
         return request
+    }
+
+    private func encode<E: URLRequestEncoderType>(request: inout URLRequest,
+                                                  with encodable: E.EncodableType,
+                                                  using encoder: E) throws {
+        request = try encoder.encode(request, with: encodable)
     }
 
     // MARK: - Closures
