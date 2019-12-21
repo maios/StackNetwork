@@ -17,6 +17,7 @@
 		3A61F4AC23AE27F400A8E47C /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A61F4AB23AE27F400A8E47C /* Response.swift */; };
 		3A61F4AE23AE280900A8E47C /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A61F4AD23AE280900A8E47C /* Error.swift */; };
 		3A61F4B023AE281600A8E47C /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A61F4AF23AE281600A8E47C /* HTTPMethod.swift */; };
+		3A61F4B723AE2E7B00A8E47C /* Cancellable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A61F4B623AE2E7B00A8E47C /* Cancellable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +44,7 @@
 		3A61F4AB23AE27F400A8E47C /* Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
 		3A61F4AD23AE280900A8E47C /* Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
 		3A61F4AF23AE281600A8E47C /* HTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
+		3A61F4B623AE2E7B00A8E47C /* Cancellable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cancellable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +113,7 @@
 				3A61F4AB23AE27F400A8E47C /* Response.swift */,
 				3A61F4AD23AE280900A8E47C /* Error.swift */,
 				3A61F4AF23AE281600A8E47C /* HTTPMethod.swift */,
+				3A61F4B623AE2E7B00A8E47C /* Cancellable.swift */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -227,6 +230,7 @@
 			files = (
 				3A61F4AA23AE27E700A8E47C /* Task.swift in Sources */,
 				3A61F4A823AE27D400A8E47C /* TargetType.swift in Sources */,
+				3A61F4B723AE2E7B00A8E47C /* Cancellable.swift in Sources */,
 				3A61F4B023AE281600A8E47C /* HTTPMethod.swift in Sources */,
 				3A61F4A423AE277400A8E47C /* NetworkProviderType.swift in Sources */,
 				3A61F4A623AE27BB00A8E47C /* NetworkProvider.swift in Sources */,

@@ -6,4 +6,11 @@
 //  Copyright © 2019 maimai. All rights reserved.
 //
 
-import Foundation
+/// Represents an HTTP task.
+public enum Task {
+    /// A request with no additional data.
+    case requestPlain
+
+    /// A requests body set with data.
+    case requestData(Data)
+}

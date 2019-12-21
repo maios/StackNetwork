@@ -7,3 +7,15 @@
 //
 
 import Foundation
+
+public typealias NetworkCompletion = (Result<Response, Error>) -> Void
+
+public protocol NetworkProviderType {
+    associatedtype Target: TargetType
+
+    /// Designated request-making method.
+    /// - Returns: A `Cancellable` token that can be used to cancel the network request.
+    func request(_ target: Target,
+                 callbackQueue: DispatchQueue?,
+                 completion: @escaping NetworkCompletion) -> Cancellable
+}

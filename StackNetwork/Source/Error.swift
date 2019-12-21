@@ -7,3 +7,12 @@
 //
 
 import Foundation
+
+public enum NetworkError: Error {
+    /// Request failed because of unknown error.
+    case unknown
+    /// Request failed because of network error.
+    case requestFailed(Error, Data?)
+    /// Others.
+    case others(Error)
+}
