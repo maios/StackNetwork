@@ -23,8 +23,8 @@ public final class Response: CustomDebugStringConvertible, Equatable {
     /// The HTTPURLResponse object.
     public let response: HTTPURLResponse?
 
-    public init(statusCode: Int, data: Data, request: URLRequest? = nil, response: HTTPURLResponse? = nil) {
-        self.statusCode = statusCode
+    public init(data: Data, request: URLRequest? = nil, response: HTTPURLResponse) {
+        self.statusCode = response.statusCode
         self.data = data
         self.request = request
         self.response = response
