@@ -10,6 +10,13 @@
 		3A61F49223AE1F4200A8E47C /* StackNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A61F48823AE1F4200A8E47C /* StackNetwork.framework */; };
 		3A61F49723AE1F4200A8E47C /* StackNetworkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A61F49623AE1F4200A8E47C /* StackNetworkTests.swift */; };
 		3A61F49923AE1F4200A8E47C /* StackNetwork.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A61F48B23AE1F4200A8E47C /* StackNetwork.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3A61F4A423AE277400A8E47C /* NetworkProviderType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A61F4A323AE277400A8E47C /* NetworkProviderType.swift */; };
+		3A61F4A623AE27BB00A8E47C /* NetworkProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A61F4A523AE27BB00A8E47C /* NetworkProvider.swift */; };
+		3A61F4A823AE27D400A8E47C /* TargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A61F4A723AE27D400A8E47C /* TargetType.swift */; };
+		3A61F4AA23AE27E700A8E47C /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A61F4A923AE27E700A8E47C /* Task.swift */; };
+		3A61F4AC23AE27F400A8E47C /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A61F4AB23AE27F400A8E47C /* Response.swift */; };
+		3A61F4AE23AE280900A8E47C /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A61F4AD23AE280900A8E47C /* Error.swift */; };
+		3A61F4B023AE281600A8E47C /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A61F4AF23AE281600A8E47C /* HTTPMethod.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +36,13 @@
 		3A61F49123AE1F4200A8E47C /* StackNetworkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StackNetworkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A61F49623AE1F4200A8E47C /* StackNetworkTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackNetworkTests.swift; sourceTree = "<group>"; };
 		3A61F49823AE1F4200A8E47C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3A61F4A323AE277400A8E47C /* NetworkProviderType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProviderType.swift; sourceTree = "<group>"; };
+		3A61F4A523AE27BB00A8E47C /* NetworkProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProvider.swift; sourceTree = "<group>"; };
+		3A61F4A723AE27D400A8E47C /* TargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetType.swift; sourceTree = "<group>"; };
+		3A61F4A923AE27E700A8E47C /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
+		3A61F4AB23AE27F400A8E47C /* Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
+		3A61F4AD23AE280900A8E47C /* Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
+		3A61F4AF23AE281600A8E47C /* HTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +85,7 @@
 		3A61F48A23AE1F4200A8E47C /* StackNetwork */ = {
 			isa = PBXGroup;
 			children = (
+				3A61F4A223AE275F00A8E47C /* Source */,
 				3A61F48B23AE1F4200A8E47C /* StackNetwork.h */,
 				3A61F48C23AE1F4200A8E47C /* Info.plist */,
 			);
@@ -84,6 +99,20 @@
 				3A61F49823AE1F4200A8E47C /* Info.plist */,
 			);
 			path = StackNetworkTests;
+			sourceTree = "<group>";
+		};
+		3A61F4A223AE275F00A8E47C /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				3A61F4A323AE277400A8E47C /* NetworkProviderType.swift */,
+				3A61F4A523AE27BB00A8E47C /* NetworkProvider.swift */,
+				3A61F4A723AE27D400A8E47C /* TargetType.swift */,
+				3A61F4A923AE27E700A8E47C /* Task.swift */,
+				3A61F4AB23AE27F400A8E47C /* Response.swift */,
+				3A61F4AD23AE280900A8E47C /* Error.swift */,
+				3A61F4AF23AE281600A8E47C /* HTTPMethod.swift */,
+			);
+			path = Source;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -148,6 +177,7 @@
 				TargetAttributes = {
 					3A61F48723AE1F4200A8E47C = {
 						CreatedOnToolsVersion = 11.3;
+						LastSwiftMigration = 1130;
 					};
 					3A61F49023AE1F4200A8E47C = {
 						CreatedOnToolsVersion = 11.3;
@@ -195,6 +225,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3A61F4AA23AE27E700A8E47C /* Task.swift in Sources */,
+				3A61F4A823AE27D400A8E47C /* TargetType.swift in Sources */,
+				3A61F4B023AE281600A8E47C /* HTTPMethod.swift in Sources */,
+				3A61F4A423AE277400A8E47C /* NetworkProviderType.swift in Sources */,
+				3A61F4A623AE27BB00A8E47C /* NetworkProvider.swift in Sources */,
+				3A61F4AE23AE280900A8E47C /* Error.swift in Sources */,
+				3A61F4AC23AE27F400A8E47C /* Response.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -340,6 +377,7 @@
 		3A61F49D23AE1F4200A8E47C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = CRLRD53RWG;
@@ -356,6 +394,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.maimai.StackNetwork;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -364,6 +403,7 @@
 		3A61F49E23AE1F4200A8E47C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = CRLRD53RWG;
@@ -388,6 +428,7 @@
 		3A61F4A023AE1F4200A8E47C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = CRLRD53RWG;
 				INFOPLIST_FILE = StackNetworkTests/Info.plist;
@@ -406,6 +447,7 @@
 		3A61F4A123AE1F4200A8E47C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = CRLRD53RWG;
 				INFOPLIST_FILE = StackNetworkTests/Info.plist;
