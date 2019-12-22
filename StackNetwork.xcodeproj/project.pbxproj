@@ -18,6 +18,8 @@
 		3A1C4BE523AFFEDB0012FC6F /* OHHTTPStubs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A1C4BE423AFFEDB0012FC6F /* OHHTTPStubs.framework */; };
 		3A1C4BE623AFFF2F0012FC6F /* OHHTTPStubs.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3A1C4BE423AFFEDB0012FC6F /* OHHTTPStubs.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		3A1C4BE823AFFF490012FC6F /* NetworkIntegrationSpecs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A1C4BE723AFFF490012FC6F /* NetworkIntegrationSpecs.swift */; };
+		3A1C4BEC23B0114F0012FC6F /* JSONEncoder+KeyPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A1C4BEB23B0114F0012FC6F /* JSONEncoder+KeyPath.swift */; };
+		3A1C4BEE23B011EB0012FC6F /* Response+Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A1C4BED23B011EB0012FC6F /* Response+Map.swift */; };
 		3A61F49223AE1F4200A8E47C /* StackNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A61F48823AE1F4200A8E47C /* StackNetwork.framework */; };
 		3A61F49923AE1F4200A8E47C /* StackNetwork.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A61F48B23AE1F4200A8E47C /* StackNetwork.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3A61F4A423AE277400A8E47C /* NetworkProviderType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A61F4A323AE277400A8E47C /* NetworkProviderType.swift */; };
@@ -68,6 +70,8 @@
 		3A1C4BD823AEAA210012FC6F /* TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestHelpers.swift; sourceTree = "<group>"; };
 		3A1C4BE423AFFEDB0012FC6F /* OHHTTPStubs.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OHHTTPStubs.framework; path = Carthage/Build/iOS/OHHTTPStubs.framework; sourceTree = "<group>"; };
 		3A1C4BE723AFFF490012FC6F /* NetworkIntegrationSpecs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkIntegrationSpecs.swift; sourceTree = "<group>"; };
+		3A1C4BEB23B0114F0012FC6F /* JSONEncoder+KeyPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JSONEncoder+KeyPath.swift"; sourceTree = "<group>"; };
+		3A1C4BED23B011EB0012FC6F /* Response+Map.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Response+Map.swift"; sourceTree = "<group>"; };
 		3A61F48823AE1F4200A8E47C /* StackNetwork.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = StackNetwork.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A61F48B23AE1F4200A8E47C /* StackNetwork.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StackNetwork.h; sourceTree = "<group>"; };
 		3A61F48C23AE1F4200A8E47C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -113,6 +117,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3A1C4BE923B00E6A0012FC6F /* Enums */ = {
+			isa = PBXGroup;
+			children = (
+				3A61F4A923AE27E700A8E47C /* Task.swift */,
+				3A61F4AD23AE280900A8E47C /* Error.swift */,
+				3A61F4AF23AE281600A8E47C /* HTTPMethod.swift */,
+				3A1C4BD223AE9FA20012FC6F /* StubBehavior.swift */,
+			);
+			name = Enums;
+			sourceTree = "<group>";
+		};
+		3A1C4BEA23B0113E0012FC6F /* Decoding */ = {
+			isa = PBXGroup;
+			children = (
+				3A1C4BEB23B0114F0012FC6F /* JSONEncoder+KeyPath.swift */,
+				3A1C4BED23B011EB0012FC6F /* Response+Map.swift */,
+			);
+			name = Decoding;
+			sourceTree = "<group>";
+		};
 		3A61F47E23AE1F4200A8E47C = {
 			isa = PBXGroup;
 			children = (
@@ -158,16 +182,14 @@
 		3A61F4A223AE275F00A8E47C /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				3A1C4BEA23B0113E0012FC6F /* Decoding */,
+				3A1C4BE923B00E6A0012FC6F /* Enums */,
 				3A61F4BA23AE493F00A8E47C /* Encoding */,
 				3A61F4A323AE277400A8E47C /* NetworkProviderType.swift */,
 				3A61F4A523AE27BB00A8E47C /* NetworkProvider.swift */,
 				3A61F4A723AE27D400A8E47C /* TargetType.swift */,
-				3A61F4A923AE27E700A8E47C /* Task.swift */,
 				3A61F4AB23AE27F400A8E47C /* Response.swift */,
-				3A61F4AD23AE280900A8E47C /* Error.swift */,
-				3A61F4AF23AE281600A8E47C /* HTTPMethod.swift */,
 				3A61F4B623AE2E7B00A8E47C /* Cancellable.swift */,
-				3A1C4BD223AE9FA20012FC6F /* StubBehavior.swift */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -335,10 +357,12 @@
 				3A61F4BE23AE4A3A00A8E47C /* JSONEncoder+RequestEncoding.swift in Sources */,
 				3A61F4C023AE4C2C00A8E47C /* ParameterEncoder.swift in Sources */,
 				3A1C4BD323AE9FA20012FC6F /* StubBehavior.swift in Sources */,
+				3A1C4BEC23B0114F0012FC6F /* JSONEncoder+KeyPath.swift in Sources */,
 				3A61F4A823AE27D400A8E47C /* TargetType.swift in Sources */,
 				3A61F4B723AE2E7B00A8E47C /* Cancellable.swift in Sources */,
 				3A61F4B023AE281600A8E47C /* HTTPMethod.swift in Sources */,
 				3A61F4A423AE277400A8E47C /* NetworkProviderType.swift in Sources */,
+				3A1C4BEE23B011EB0012FC6F /* Response+Map.swift in Sources */,
 				3A61F4BC23AE497B00A8E47C /* RequestEncoding.swift in Sources */,
 				3A61F4A623AE27BB00A8E47C /* NetworkProvider.swift in Sources */,
 				3A61F4AE23AE280900A8E47C /* Error.swift in Sources */,
