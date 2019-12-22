@@ -35,6 +35,12 @@ open class NetworkProvider<Target: TargetType>: NetworkProviderType {
 
     // MARK: NetworkProviderType
 
+    /// Sends network request with given target. Returns a cancellable token which can be used to cancel the request.
+    ///
+    /// - Parameter target: The target to which the network request will be made and sent.
+    /// - Parameter callbackQueue: The `DispatchQueue` on which the callback will be triggered.
+    /// If none specified, the default  `callbackQueue` will be used.
+    /// - Parameter completion: The callback to trigger when a request is completed.
     public func request(_ target: Target,
                         callbackQueue: DispatchQueue? = nil,
                         completion: @escaping NetworkCompletion) -> Cancellable {

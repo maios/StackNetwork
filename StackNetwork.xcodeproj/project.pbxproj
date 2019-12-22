@@ -15,6 +15,9 @@
 		3A1C4BD323AE9FA20012FC6F /* StubBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A1C4BD223AE9FA20012FC6F /* StubBehavior.swift */; };
 		3A1C4BD723AEA9BF0012FC6F /* NetworkProviderSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A1C4BD623AEA9BF0012FC6F /* NetworkProviderSpec.swift */; };
 		3A1C4BD923AEAA210012FC6F /* TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A1C4BD823AEAA210012FC6F /* TestHelpers.swift */; };
+		3A1C4BE523AFFEDB0012FC6F /* OHHTTPStubs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A1C4BE423AFFEDB0012FC6F /* OHHTTPStubs.framework */; };
+		3A1C4BE623AFFF2F0012FC6F /* OHHTTPStubs.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3A1C4BE423AFFEDB0012FC6F /* OHHTTPStubs.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		3A1C4BE823AFFF490012FC6F /* NetworkIntegrationSpecs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A1C4BE723AFFF490012FC6F /* NetworkIntegrationSpecs.swift */; };
 		3A61F49223AE1F4200A8E47C /* StackNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A61F48823AE1F4200A8E47C /* StackNetwork.framework */; };
 		3A61F49923AE1F4200A8E47C /* StackNetwork.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A61F48B23AE1F4200A8E47C /* StackNetwork.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3A61F4A423AE277400A8E47C /* NetworkProviderType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A61F4A323AE277400A8E47C /* NetworkProviderType.swift */; };
@@ -50,6 +53,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				3A1C4BE623AFFF2F0012FC6F /* OHHTTPStubs.framework in CopyFiles */,
 				3A1C4BCF23AE5F270012FC6F /* Nimble.framework in CopyFiles */,
 				3A1C4BCE23AE5F210012FC6F /* Quick.framework in CopyFiles */,
 			);
@@ -62,6 +66,8 @@
 		3A1C4BD223AE9FA20012FC6F /* StubBehavior.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubBehavior.swift; sourceTree = "<group>"; };
 		3A1C4BD623AEA9BF0012FC6F /* NetworkProviderSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProviderSpec.swift; sourceTree = "<group>"; };
 		3A1C4BD823AEAA210012FC6F /* TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestHelpers.swift; sourceTree = "<group>"; };
+		3A1C4BE423AFFEDB0012FC6F /* OHHTTPStubs.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OHHTTPStubs.framework; path = Carthage/Build/iOS/OHHTTPStubs.framework; sourceTree = "<group>"; };
+		3A1C4BE723AFFF490012FC6F /* NetworkIntegrationSpecs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkIntegrationSpecs.swift; sourceTree = "<group>"; };
 		3A61F48823AE1F4200A8E47C /* StackNetwork.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = StackNetwork.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A61F48B23AE1F4200A8E47C /* StackNetwork.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StackNetwork.h; sourceTree = "<group>"; };
 		3A61F48C23AE1F4200A8E47C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -90,6 +96,7 @@
 			files = (
 				3A1C4BCA23AE5E8D0012FC6F /* Nimble.framework in Frameworks */,
 				3A1C4BCB23AE5E8D0012FC6F /* Quick.framework in Frameworks */,
+				3A1C4BE523AFFEDB0012FC6F /* OHHTTPStubs.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -143,6 +150,7 @@
 				3A1C4BD023AE8D1E0012FC6F /* JSONEncoderSpec.swift */,
 				3A1C4BD623AEA9BF0012FC6F /* NetworkProviderSpec.swift */,
 				3A1C4BD823AEAA210012FC6F /* TestHelpers.swift */,
+				3A1C4BE723AFFF490012FC6F /* NetworkIntegrationSpecs.swift */,
 			);
 			path = StackNetworkTests;
 			sourceTree = "<group>";
@@ -177,6 +185,7 @@
 		3A61F4C523AE58AB00A8E47C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3A1C4BE423AFFEDB0012FC6F /* OHHTTPStubs.framework */,
 				3A61F4C723AE58AB00A8E47C /* Nimble.framework */,
 				3A61F4C623AE58AB00A8E47C /* Quick.framework */,
 			);
@@ -302,12 +311,14 @@
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/Quick.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Nimble.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/OHHTTPStubs.framework",
 			);
 			outputFileListPaths = (
 			);
 			outputPaths = (
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Quick.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Nimble.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/OHHTTPStubs.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -343,6 +354,7 @@
 				3A61F4CC23AE596100A8E47C /* ParameterEncoderSpec.swift in Sources */,
 				3A1C4BD123AE8D1E0012FC6F /* JSONEncoderSpec.swift in Sources */,
 				3A1C4BD923AEAA210012FC6F /* TestHelpers.swift in Sources */,
+				3A1C4BE823AFFF490012FC6F /* NetworkIntegrationSpecs.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

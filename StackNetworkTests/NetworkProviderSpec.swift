@@ -98,5 +98,33 @@ class NetworkProviderSpec: QuickSpec {
                 }
             }
         }
+
+        describe("A NetworkProvider instance") {
+            var defaultQueue: DispatchQueue!
+
+            beforeEach {
+                defaultQueue = DispatchQueue(label: "com.maimai.StackNetwork.tests.default-queue")
+                sut = NetworkProvider<GitHub>(callbackQueue: defaultQueue)
+            }
+
+            it("will use default queue if none specified when making request") {
+                waitUntil { done in
+                    _ = sut.request(.userProfile("good_cat")) { _ in
+                        expect { dispatchPrecondition(condition: .onQueue(defaultQueue)) }.toNot(throwAssertion())
+                        done()
+                    }
+                }
+            }
+
+            it("will use custom queue if specified when making request") {
+                waitUntil { done in
+                    let otherQueue = DispatchQueue(label: "com.maimai.StackNetwork.tests.some-queue")
+                    _ = sut.request(.userProfile("good_cat"), callbackQueue: otherQueue) { _ in
+                        expect { dispatchPrecondition(condition: .onQueue(otherQueue)) }.toNot(throwAssertion())
+                        done()
+                    }
+                }
+            }
+        }
     }
 }

@@ -53,6 +53,22 @@ extension GitHub: Equatable {
 
 // MARK: Helpers
 
+extension Result {
+
+    var isSuccess: Bool {
+        do {
+            _ = try get()
+            return true
+        } catch {
+            return false
+        }
+    }
+}
+
+enum TestError: Error {
+    case some
+}
+
 struct TestHelper {
 
     static func stubSuccess(target: GitHub) -> SampleResponse {
