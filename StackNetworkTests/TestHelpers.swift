@@ -51,6 +51,37 @@ extension GitHub: Equatable {
     }
 }
 
+// MARK: Model
+
+struct Cat: Encodable {
+    let name: String
+    var isGoodBoi: Bool = true
+
+    enum CodingKeys: String, CodingKey {
+        case name
+    }
+
+    enum `Error`: Swift.Error {
+        case catBeingCat
+    }
+
+    func encode(to encoder: Encoder) throws {
+        if isGoodBoi {
+            var container = encoder.container(keyedBy: CodingKeys.self)
+            try container.encode(name, forKey: .name)
+        } else {
+            throw Error.catBeingCat
+        }
+    }
+}
+
+struct MovieCharacter: Decodable, Equatable {
+    let id: String
+    let name: String
+    let gender: String
+    let age: Int
+}
+
 // MARK: Helpers
 
 extension Result {
@@ -71,24 +102,29 @@ enum TestError: Error {
 
 struct TestHelper {
 
-    static func stubSuccess(target: GitHub) -> SampleResponse {
-        let response: HTTPURLResponse
-        switch target {
-        case .zen:
-            response = HTTPURLResponse(url: URL(string: "https://api.github.com/zen")!,
-                                       statusCode: 200,
-                                       httpVersion: "1.1",
-                                       headerFields: nil)!
-        case .userProfile(let name):
-            response = HTTPURLResponse(url: URL(string: "https://api.github.com/users/\(name)")!,
-            statusCode: 200,
-            httpVersion: "1.1",
-            headerFields: nil)!
+    static func stubSampleResponse(target: GitHub, error: Error? = nil) -> SampleResponse {
+        if let error = error {
+            return .networkError(error)
+        } else {
+            let response: HTTPURLResponse
+            switch target {
+            case .zen:
+                response = HTTPURLResponse(url: URL(string: "https://api.github.com/zen")!,
+                                           statusCode: 200,
+                                           httpVersion: "1.1",
+                                           headerFields: nil)!
+            case .userProfile(let name):
+                response = HTTPURLResponse(url: URL(string: "https://api.github.com/users/\(name)")!,
+                statusCode: 200,
+                httpVersion: "1.1",
+                headerFields: nil)!
+            }
+            return .networkResponse(response, target.sampleData)
         }
-        return .networkResponse(response, target.sampleData)
     }
 
-    static func stubFailure(target: GitHub, error: Error) -> SampleResponse {
-        return .networkError(error)
+    static func getTestMovie() -> Data {
+        let url = Bundle(identifier: "com.maimai.StackNetworkTests")!.url(forResource: "movie", withExtension: "json")!
+        return try! Data(contentsOf: url, options: .mappedIfSafe)
     }
 }

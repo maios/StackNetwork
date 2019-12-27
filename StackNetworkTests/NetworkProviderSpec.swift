@@ -19,7 +19,7 @@ class NetworkProviderSpec: QuickSpec {
 
         describe("A NetworkProvider instance can stub success") {
             beforeEach {
-                stubBehavior = { target in .immediate(TestHelper.stubSuccess(target: target)) }
+                stubBehavior = { target in .immediate(TestHelper.stubSampleResponse(target: target)) }
                 sut = NetworkProvider<GitHub>(stubBehavior: stubBehavior)
             }
 
@@ -61,10 +61,10 @@ class NetworkProviderSpec: QuickSpec {
         }
 
         describe("A NetworkProvider instance can stub failure") {
-            var stubbedError: URLError!
+            var stubError: URLError!
             beforeEach {
-                stubbedError = URLError(.networkConnectionLost)
-                stubBehavior = { target in .immediate(TestHelper.stubFailure(target: target, error: stubbedError)) }
+                stubError = URLError(.networkConnectionLost)
+                stubBehavior = { target in .immediate(TestHelper.stubSampleResponse(target: target, error: stubError)) }
                 sut = NetworkProvider<GitHub>(stubBehavior: stubBehavior)
             }
 
@@ -73,7 +73,7 @@ class NetworkProviderSpec: QuickSpec {
                     _ = sut.request(.zen) { result in
                         switch result {
                         case .failure(let error):
-                            expect(error as? URLError) == stubbedError
+                            expect(error as? URLError) == stubError
                             done()
                         case .success: fail("Expect request to fail!")
                         }
@@ -84,7 +84,7 @@ class NetworkProviderSpec: QuickSpec {
 
         describe("A NetworkProvider instance with delayed stubs") {
             beforeEach {
-                stubBehavior = { target in .delay(seconds: 1, response: TestHelper.stubSuccess(target: target)) }
+                stubBehavior = { target in .delay(seconds: 1, response: TestHelper.stubSampleResponse(target: target)) }
                 sut = NetworkProvider<GitHub>(stubBehavior: stubBehavior)
             }
 

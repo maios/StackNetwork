@@ -56,26 +56,4 @@ class JSONEncoderSpec: QuickSpec {
             }
         }
     }
-
-    private struct Cat: Encodable {
-        let name: String
-        var isGoodBoi: Bool = true
-
-        enum CodingKeys: String, CodingKey {
-            case name
-        }
-
-        enum `Error`: Swift.Error {
-            case catBeingCat
-        }
-
-        func encode(to encoder: Encoder) throws {
-            if isGoodBoi {
-                var container = encoder.container(keyedBy: CodingKeys.self)
-                try container.encode(name, forKey: .name)
-            } else {
-                throw Error.catBeingCat
-            }
-        }
-    }
 }
