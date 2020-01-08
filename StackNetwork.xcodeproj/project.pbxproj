@@ -26,6 +26,7 @@
 		3A1C4BF923B62C290012FC6F /* movie.json in Resources */ = {isa = PBXBuildFile; fileRef = 3A1C4BF823B62C290012FC6F /* movie.json */; };
 		3A24D7C223C66F1D00EDC931 /* RetryBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A24D7C123C66F1D00EDC931 /* RetryBehavior.swift */; };
 		3A24D7C423C674C800EDC931 /* Aliases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A24D7C323C674C800EDC931 /* Aliases.swift */; };
+		3A24D7C723C67C3200EDC931 /* MultiTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A24D7C623C67C3200EDC931 /* MultiTarget.swift */; };
 		3A61F49223AE1F4200A8E47C /* StackNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A61F48823AE1F4200A8E47C /* StackNetwork.framework */; };
 		3A61F49923AE1F4200A8E47C /* StackNetwork.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A61F48B23AE1F4200A8E47C /* StackNetwork.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3A61F4A423AE277400A8E47C /* NetworkProviderType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A61F4A323AE277400A8E47C /* NetworkProviderType.swift */; };
@@ -84,6 +85,7 @@
 		3A1C4BF823B62C290012FC6F /* movie.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = movie.json; sourceTree = "<group>"; };
 		3A24D7C123C66F1D00EDC931 /* RetryBehavior.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetryBehavior.swift; sourceTree = "<group>"; };
 		3A24D7C323C674C800EDC931 /* Aliases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Aliases.swift; sourceTree = "<group>"; };
+		3A24D7C623C67C3200EDC931 /* MultiTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiTarget.swift; sourceTree = "<group>"; };
 		3A61F48823AE1F4200A8E47C /* StackNetwork.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = StackNetwork.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A61F48B23AE1F4200A8E47C /* StackNetwork.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StackNetwork.h; sourceTree = "<group>"; };
 		3A61F48C23AE1F4200A8E47C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -167,6 +169,15 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
+		3A24D7C523C67C1400EDC931 /* Target */ = {
+			isa = PBXGroup;
+			children = (
+				3A61F4A723AE27D400A8E47C /* TargetType.swift */,
+				3A24D7C623C67C3200EDC931 /* MultiTarget.swift */,
+			);
+			name = Target;
+			sourceTree = "<group>";
+		};
 		3A61F47E23AE1F4200A8E47C = {
 			isa = PBXGroup;
 			children = (
@@ -214,13 +225,13 @@
 		3A61F4A223AE275F00A8E47C /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				3A24D7C523C67C1400EDC931 /* Target */,
 				3A1C4BF623B61EB90012FC6F /* Response */,
 				3A1C4BEA23B0113E0012FC6F /* Decoding */,
 				3A1C4BE923B00E6A0012FC6F /* Enums */,
 				3A61F4BA23AE493F00A8E47C /* Encoding */,
 				3A61F4A323AE277400A8E47C /* NetworkProviderType.swift */,
 				3A61F4A523AE27BB00A8E47C /* NetworkProvider.swift */,
-				3A61F4A723AE27D400A8E47C /* TargetType.swift */,
 				3A61F4B623AE2E7B00A8E47C /* Cancellable.swift */,
 				3A1C21A923C09BEC00D1FD66 /* Request.swift */,
 				3A24D7C323C674C800EDC931 /* Aliases.swift */,
@@ -406,6 +417,7 @@
 				3A61F4A623AE27BB00A8E47C /* NetworkProvider.swift in Sources */,
 				3A61F4AE23AE280900A8E47C /* Error.swift in Sources */,
 				3A61F4AC23AE27F400A8E47C /* Response.swift in Sources */,
+				3A24D7C723C67C3200EDC931 /* MultiTarget.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
