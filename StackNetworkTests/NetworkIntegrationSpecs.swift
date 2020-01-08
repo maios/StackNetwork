@@ -19,9 +19,7 @@ class NetworkIntegrationSpecs: QuickSpec {
 
         beforeEach {
             sut = NetworkProvider<GitHub>()
-            OHHTTPStubs.stubRequests(passingTest: isPath("/zen")) { _ -> OHHTTPStubsResponse in
-                return OHHTTPStubsResponse(error: URLError(.networkConnectionLost)).responseTime(1)
-            }
+
             OHHTTPStubs.stubRequests(passingTest: isPath("/users/good_cat")) { _ -> OHHTTPStubsResponse in
                 return OHHTTPStubsResponse(data: GitHub.userProfile("good_cat").sampleData, statusCode: 200, headers: nil)
             }
@@ -35,6 +33,11 @@ class NetworkIntegrationSpecs: QuickSpec {
         }
 
         describe("A NetworkProvider instance when completed") {
+            beforeEach {
+                OHHTTPStubs.stubRequests(passingTest: isPath("/zen")) { _ -> OHHTTPStubsResponse in
+                    return OHHTTPStubsResponse(error: URLError(.networkConnectionLost)).responseTime(1)
+                }
+            }
 
             it("will return correct data with success status code") {
                 waitUntil { done in
@@ -81,7 +84,7 @@ class NetworkIntegrationSpecs: QuickSpec {
                 var requestIsAdapted = false
 
                 beforeEach {
-                    let requestAdapter: NetworkProvider.RequestAdapterClosure = { request in
+                    let requestAdapter: RequestAdapterClosure = { request in
                         requestIsAdapted = true
                         return request
                     }
@@ -98,7 +101,7 @@ class NetworkIntegrationSpecs: QuickSpec {
             }
             context("if adaption fails") {
                 beforeEach {
-                    let requestAdapter: NetworkProvider.RequestAdapterClosure = { request in
+                    let requestAdapter: RequestAdapterClosure = { request in
                         throw TestError.some
                     }
                     sut = NetworkProvider<GitHub>(requestAdapter: requestAdapter)
@@ -109,6 +112,79 @@ class NetworkIntegrationSpecs: QuickSpec {
                             expect(result.isSuccess).to(beFalse())
                             done()
                         }
+                    }
+                }
+            }
+        }
+
+        describe("A NetworkProvider instance") {
+            var requestCount = 0
+
+            beforeEach {
+                var iterationCount = 0
+                OHHTTPStubs.stubRequests(passingTest: isPath("/zen")) { _ -> OHHTTPStubsResponse in
+                    iterationCount += 1
+                    switch iterationCount {
+                    case 1: return OHHTTPStubsResponse(error: URLError(.networkConnectionLost)).responseTime(1)
+                    default: return OHHTTPStubsResponse(data: GitHub.zen.sampleData, statusCode: 200, headers: nil)
+                    }
+                }
+            }
+
+            afterEach {
+                requestCount = 0
+            }
+
+            describe("when retry behavior is not to retry") {
+                beforeEach {
+                    let retryBehavior: RetryBehaviorClosure = { (_, _) in
+                        return .doNotRetry
+                    }
+                    let requestAdapter: RequestAdapterClosure = { request in
+                        requestCount += 1
+                        return request
+                    }
+                    sut = NetworkProvider<GitHub>(requestAdapter: requestAdapter, retryBehavior: retryBehavior)
+                }
+
+                it("will not retry requests if failed") {
+                    waitUntil(timeout: 2) { done in
+                        _ = sut.request(.zen) { _ in
+                            expect(requestCount) == 1
+                            done()
+                        }
+                    }
+                }
+            }
+
+            describe("can retry request") {
+                beforeEach {
+                    let retryBehavior: RetryBehaviorClosure = { (_, _) in
+                        return .retryWithDelay(2)
+                    }
+                    let requestAdapter: RequestAdapterClosure = { request in
+                        requestCount += 1
+                        return request
+                    }
+                    sut = NetworkProvider<GitHub>(requestAdapter: requestAdapter, retryBehavior: retryBehavior)
+                }
+
+                it("it will adapt request everytime it is retried") {
+                    waitUntil(timeout: 4) { done in
+                        _ = sut.request(.zen) { _ in
+                            expect(requestCount) > 1
+                            done()
+                        }
+                    }
+                }
+
+                it("it will retry with given delay interval") {
+                    let startDate = Date()
+                    waitUntil(timeout: 4) { done in
+                        _ = sut.request(.zen, completion: { _ in
+                            expect(Date().timeIntervalSince(startDate)) >= 2
+                            done()
+                        })
                     }
                 }
             }

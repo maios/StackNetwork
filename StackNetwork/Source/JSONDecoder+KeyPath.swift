@@ -8,8 +8,6 @@
 
 import Foundation
 
-public typealias JSON = Any
-
 private struct DecodableWrapper<T>: Decodable where T: Decodable {
     let value: T
 }

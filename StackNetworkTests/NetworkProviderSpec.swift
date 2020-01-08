@@ -15,7 +15,7 @@ class NetworkProviderSpec: QuickSpec {
 
     override func spec() {
         var sut: NetworkProvider<GitHub>!
-        var stubBehavior: NetworkProvider<GitHub>.StubBehaviorClosure!
+        var stubBehavior: StubBehaviorClosure<GitHub>!
 
         describe("A NetworkProvider instance can stub success") {
             beforeEach {

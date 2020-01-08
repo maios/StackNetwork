@@ -15,7 +15,8 @@ open class NetworkProvider<Target: TargetType>: NetworkProviderType {
     private let callbackQueue: DispatchQueue
 
     private let requestAdapter: RequestAdapterClosure
-    private let stubBehavior: StubBehaviorClosure
+    private let retryBehavior: RetryBehaviorClosure
+    private let stubBehavior: StubBehaviorClosure<Target>
 
     // MARK: Initializations
 
@@ -23,13 +24,17 @@ open class NetworkProvider<Target: TargetType>: NetworkProviderType {
     /// - Parameter urlSession: The `URLSession` used to make network request. Default is `URLSession.default`.
     /// - Parameter callbackQueue: The default `DispatchQueue` for network callbacks.
     /// - Parameter requestAdapter: The adapter to modify the network request before it is fired.
+    /// - Parameter retryBehavior: The retry behavior when a network request fails.
+    /// - Parameter stubBehavior: Decides if a network response will be stubbed.
     public init(urlSession: URLSession = .shared,
                 callbackQueue: DispatchQueue? = nil,
                 requestAdapter: @escaping RequestAdapterClosure = NetworkProvider.defaultRequestAdapter(_:),
-                stubBehavior: @escaping StubBehaviorClosure = NetworkProvider.defaultStubBehavior(_:)) {
+                retryBehavior: @escaping RetryBehaviorClosure = NetworkProvider.defaultRequestBehavior(_:error:),
+                stubBehavior: @escaping StubBehaviorClosure<Target> = NetworkProvider.defaultStubBehavior(_:)) {
         self.urlSession = urlSession
         self.callbackQueue = callbackQueue ?? .main
         self.requestAdapter = requestAdapter
+        self.retryBehavior = retryBehavior
         self.stubBehavior = stubBehavior
     }
 
@@ -38,8 +43,9 @@ open class NetworkProvider<Target: TargetType>: NetworkProviderType {
     /// Sends network request with given target. Returns a cancellable token which can be used to cancel the request.
     ///
     /// - Parameter target: The target to which the network request will be made and sent.
-    /// - Parameter callbackQueue: The `DispatchQueue` on which the callback will be triggered.
-    /// If none specified, the default  `callbackQueue` will be used.
+    /// - Parameter callbackQueue:
+    ///     The **DispatchQueue** on which the callback will be triggered.
+    ///     If none specified, the default  `callbackQueue` will be used.
     /// - Parameter completion: The callback to trigger when a request is completed.
     public func request(_ target: Target,
                         callbackQueue: DispatchQueue? = nil,
@@ -53,12 +59,11 @@ open class NetworkProvider<Target: TargetType>: NetworkProviderType {
         }
 
         do {
-            let urlRequest = try requestAdapter(try makeURLRequest(for: target))
+            let request = Request(urlRequest: try makeURLRequest(for: target))
             let stubBehavior = self.stubBehavior(target)
-            return request(urlRequest,
-                           stubBehavior: stubBehavior,
-                           callbackQueue: callbackQueue,
-                           completion: complete(withResult:))
+            return self.request(request,
+                                stubBehavior: stubBehavior,
+                                completion: complete(withResult:))
         } catch {
             complete(withResult: .failure(error))
             return AnyCancellable()
@@ -95,48 +100,81 @@ open class NetworkProvider<Target: TargetType>: NetworkProviderType {
                                                   using encoder: E) throws {
         request = try encoder.encode(request, with: encodable)
     }
-
-    // MARK: - Closures
-
-    public typealias RequestAdapterClosure = (URLRequest) throws -> URLRequest
-    public typealias StubBehaviorClosure = (Target) -> StubBehavior
 }
 
 // MARK: Internals
 
 extension NetworkProvider {
 
-    private func request(_ urlRequest: URLRequest,
-                         stubBehavior: StubBehavior,
-                         callbackQueue: DispatchQueue,
-                         completion: @escaping NetworkCompletion) -> Cancellable {
-        switch stubBehavior {
-        case .never:
-            return request(urlRequest, callbackQueue: callbackQueue, completion: completion)
-        case .immediate(let sampleResponse):
-            return stubRequest(urlRequest,
-                               sampleResponse: sampleResponse,
-                               delay: 0,
-                               callbackQueue: callbackQueue,
-                               completion: completion)
-        case .delay(let seconds, let sampleResponse):
-            return stubRequest(urlRequest,
-                               sampleResponse: sampleResponse,
-                               delay: seconds,
-                               callbackQueue: callbackQueue,
-                               completion: completion)
+    /// Attempts to retry the given `Request` with the given `result`.
+    private func retry(request: Request,
+                       with result: Result<Response, Error>,
+                       stubBehavior: StubBehavior,
+                       completion: @escaping NetworkCompletion) {
+        let retryBehavior: RetryBehavior
+        if case .failure(let error) = result {
+            retryBehavior = self.retryBehavior(request, error)
+        } else {
+            retryBehavior = .doNotRetry
+        }
+
+        if retryBehavior.shouldRetry {
+            request.retryCount += 1
+            DispatchQueue.main.asyncAfter(deadline: .now() + retryBehavior.delayInterval) {
+                _ = self.request(request,
+                                 stubBehavior: stubBehavior,
+                                 completion: completion)
+            }
+        } else {
+            completion(result)
         }
     }
 
-    private func request(_ request: URLRequest,
-                         callbackQueue: DispatchQueue,
+    /// Executes the given **Request** based on the given `stubBehavior`.
+    private func request(_ request: Request,
+                         stubBehavior: StubBehavior,
                          completion: @escaping NetworkCompletion) -> Cancellable {
-        let task = urlSession.dataTask(with: request) { (data, urlResponse, error) in
+
+        let retryBeforeComplete: NetworkCompletion = { [weak self] result in
+            self?.retry(request: request,
+                        with: result,
+                        stubBehavior: stubBehavior,
+                        completion: completion)
+        }
+
+        do {
+            request.urlRequest = try requestAdapter(request.urlRequest)
+            switch stubBehavior {
+            case .never:
+                return self.request(request, completion: retryBeforeComplete)
+            case .immediate(let sampleResponse):
+                return stubRequest(request,
+                                   sampleResponse: sampleResponse,
+                                   delay: 0,
+                                   completion: retryBeforeComplete)
+            case .delay(let seconds, let sampleResponse):
+                return stubRequest(request,
+                                   sampleResponse: sampleResponse,
+                                   delay: seconds,
+                                   completion: retryBeforeComplete)
+            }
+        } catch {
+            retryBeforeComplete(.failure(error))
+            return AnyCancellable()
+        }
+    }
+
+    /// Performs an actual network request for the given **Request**.
+    ///
+    /// - Parameter request: The **Request** to perform.
+    /// - Parameter completion: The callback to be triggered when a network task is completed.
+    private func request(_ request: Request, completion: @escaping NetworkCompletion) -> Cancellable {
+        let task = urlSession.dataTask(with: request.urlRequest) { (data, urlResponse, error) in
             let result: Result<Response, Error>
 
             if let data = data, let httpResponse = urlResponse as? HTTPURLResponse {
                 let response = Response(data: data,
-                                        request: request,
+                                        request: request.urlRequest,
                                         response: httpResponse)
                 result = .success(response)
             } else {
@@ -148,22 +186,27 @@ extension NetworkProvider {
         return task
     }
 
-    private func stubRequest(_ request: URLRequest,
+    /// Stub network response for the given **Request** and trigger completion.
+    ///
+    /// - Parameter request: The **Request** to which response will be stubbed.
+    /// - Parameter sampleResponse: Decides which response will be stubbed.
+    /// - Parameter delay: Decides when the stubbed response will be sent.
+    /// - Parameter completion: The callback to receive stubbed response.
+    private func stubRequest(_ request: Request,
                              sampleResponse: SampleResponse,
                              delay: TimeInterval,
-                             callbackQueue: DispatchQueue,
                              completion: @escaping NetworkCompletion) -> Cancellable {
         let result: Result<Response, Error>
         switch sampleResponse {
         case .networkResponse(let response, let data):
-            let response = Response(data: data, request: request, response: response)
+            let response = Response(data: data, request: request.urlRequest, response: response)
             result = .success(response)
 
         case .networkError(let nsError):
             result = .failure(nsError)
         }
 
-        callbackQueue.asyncAfter(deadline: .now() + delay) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
             completion(result)
         }
 
@@ -171,13 +214,18 @@ extension NetworkProvider {
     }
 }
 
-// MARK: Defaults.
+// MARK: Default values.
 
 public extension NetworkProvider {
 
     /// The default adapter for `URLRequest`.
     class func defaultRequestAdapter(_ urlRequest: URLRequest) throws -> URLRequest {
         return urlRequest
+    }
+
+    /// The default retry behavior.
+    class func defaultRequestBehavior(_ request: Request, error: Error) -> RetryBehavior {
+        return .doNotRetry
     }
 
     /// The default stub behavior for  `Target`.
