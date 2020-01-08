@@ -8,8 +8,6 @@
 
 import Foundation
 
-public typealias NetworkCompletion = (Result<Response, Error>) -> Void
-
 public protocol NetworkProviderType {
     associatedtype Target: TargetType
 
