@@ -1,7 +1,4 @@
 //
-//  NetworkProvider.swift
-//  StackNetwork
-//
 //  Created by Mai Mai on 12/21/19.
 //  Copyright © 2019 maimai. All rights reserved.
 //
@@ -13,6 +10,8 @@ open class NetworkProvider<Target: TargetType>: NetworkProviderType {
 
     private let urlSession: URLSession
     private let callbackQueue: DispatchQueue
+
+    private let plugins: [PluginType]
 
     private let requestAdapter: RequestAdapterClosure
     private let retryBehavior: RetryBehaviorClosure
@@ -28,11 +27,13 @@ open class NetworkProvider<Target: TargetType>: NetworkProviderType {
     /// - Parameter stubBehavior: Decides if a network response will be stubbed.
     public init(urlSession: URLSession = .shared,
                 callbackQueue: DispatchQueue? = nil,
+                plugins: [PluginType] = [],
                 requestAdapter: @escaping RequestAdapterClosure = NetworkProvider.defaultRequestAdapter(_:),
-                retryBehavior: @escaping RetryBehaviorClosure = NetworkProvider.defaultRequestBehavior(_:error:),
+                retryBehavior: @escaping RetryBehaviorClosure = NetworkProvider.defaultRetryBehavior(_:error:),
                 stubBehavior: @escaping StubBehaviorClosure<Target> = NetworkProvider.defaultStubBehavior(_:)) {
         self.urlSession = urlSession
         self.callbackQueue = callbackQueue ?? .main
+        self.plugins = plugins
         self.requestAdapter = requestAdapter
         self.retryBehavior = retryBehavior
         self.stubBehavior = stubBehavior
@@ -126,6 +127,9 @@ extension NetworkProvider {
                                  completion: completion)
             }
         } else {
+            for plugin in plugins {
+                plugin.didReceive(result, request: request)
+            }
             completion(result)
         }
     }
@@ -144,6 +148,11 @@ extension NetworkProvider {
 
         do {
             request.urlRequest = try requestAdapter(request.urlRequest)
+
+            for plugin in plugins {
+                plugin.willSend(request)
+            }
+
             switch stubBehavior {
             case .never:
                 return self.request(request, completion: retryBeforeComplete)
@@ -224,7 +233,7 @@ public extension NetworkProvider {
     }
 
     /// The default retry behavior.
-    class func defaultRequestBehavior(_ request: Request, error: Error) -> RetryBehavior {
+    class func defaultRetryBehavior(_ request: Retryable, error: Error) -> RetryBehavior {
         return .doNotRetry
     }
 

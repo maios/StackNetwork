@@ -118,6 +118,46 @@ class NetworkIntegrationSpecs: QuickSpec {
         }
 
         describe("A NetworkProvider instance") {
+
+            class TestNetworkPlugin: PluginType {
+                var request: Requestable?
+                var result: Result<Response, Error>?
+
+                func willSend(_ request: Requestable) {
+                    self.request = request
+                }
+
+                func didReceive(_ result: Result<Response, Error>, request: Requestable) {
+                    self.result = result
+                }
+            }
+
+            var plugin: TestNetworkPlugin!
+
+            beforeEach {
+                plugin = TestNetworkPlugin()
+                sut = NetworkProvider<GitHub>(plugins: [plugin])
+            }
+
+            it("will inform plugins before request is sent") {
+                waitUntil(timeout: 2) { done in
+                    _ = sut.request(.zen) { _ in
+                        expect(plugin.request?.urlRequest.url?.absoluteString) == "https://api.github.com/zen"
+                        done()
+                    }
+                }
+            }
+            it("will inform plugins when result is received") {
+                waitUntil(timeout: 2) { done in
+                    _ = sut.request(.zen) { _ in
+                        expect(plugin.result).toNot(beNil())
+                        done()
+                    }
+                }
+            }
+        }
+
+        describe("A NetworkProvider instance") {
             var requestCount = 0
 
             beforeEach {

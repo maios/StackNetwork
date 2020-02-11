@@ -1,7 +1,4 @@
 //
-//  Aliases.swift
-//  StackNetwork
-//
 //  Created by Mai Mai on 1/8/20.
 //  Copyright © 2020 maimai. All rights reserved.
 //
@@ -13,7 +10,7 @@ import Foundation
 public typealias NetworkCompletion = (Result<Response, Error>) -> Void
 
 public typealias RequestAdapterClosure = (URLRequest) throws -> URLRequest
-public typealias RetryBehaviorClosure = (Request, Error) -> RetryBehavior
+public typealias RetryBehaviorClosure = (Retryable, Error) -> RetryBehavior
 public typealias StubBehaviorClosure<Target: TargetType> = (Target) -> StubBehavior
 
 // MARK: Misc
