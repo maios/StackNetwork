@@ -27,6 +27,7 @@
 		3A24D7C223C66F1D00EDC931 /* RetryBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A24D7C123C66F1D00EDC931 /* RetryBehavior.swift */; };
 		3A24D7C423C674C800EDC931 /* Aliases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A24D7C323C674C800EDC931 /* Aliases.swift */; };
 		3A24D7C723C67C3200EDC931 /* MultiTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A24D7C623C67C3200EDC931 /* MultiTarget.swift */; };
+		3A2EBCDD23EDDB440051E223 /* PluginType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A2EBCDC23EDDB440051E223 /* PluginType.swift */; };
 		3A61F49223AE1F4200A8E47C /* StackNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A61F48823AE1F4200A8E47C /* StackNetwork.framework */; };
 		3A61F49923AE1F4200A8E47C /* StackNetwork.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A61F48B23AE1F4200A8E47C /* StackNetwork.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3A61F4A423AE277400A8E47C /* NetworkProviderType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A61F4A323AE277400A8E47C /* NetworkProviderType.swift */; };
@@ -86,6 +87,7 @@
 		3A24D7C123C66F1D00EDC931 /* RetryBehavior.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetryBehavior.swift; sourceTree = "<group>"; };
 		3A24D7C323C674C800EDC931 /* Aliases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Aliases.swift; sourceTree = "<group>"; };
 		3A24D7C623C67C3200EDC931 /* MultiTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiTarget.swift; sourceTree = "<group>"; };
+		3A2EBCDC23EDDB440051E223 /* PluginType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PluginType.swift; sourceTree = "<group>"; };
 		3A61F48823AE1F4200A8E47C /* StackNetwork.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = StackNetwork.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A61F48B23AE1F4200A8E47C /* StackNetwork.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StackNetwork.h; sourceTree = "<group>"; };
 		3A61F48C23AE1F4200A8E47C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -235,6 +237,7 @@
 				3A61F4B623AE2E7B00A8E47C /* Cancellable.swift */,
 				3A1C21A923C09BEC00D1FD66 /* Request.swift */,
 				3A24D7C323C674C800EDC931 /* Aliases.swift */,
+				3A2EBCDC23EDDB440051E223 /* PluginType.swift */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -399,6 +402,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3A2EBCDD23EDDB440051E223 /* PluginType.swift in Sources */,
 				3A61F4AA23AE27E700A8E47C /* Task.swift in Sources */,
 				3A1C21AA23C09BEC00D1FD66 /* Request.swift in Sources */,
 				3A61F4BE23AE4A3A00A8E47C /* JSONEncoder+RequestEncoding.swift in Sources */,
