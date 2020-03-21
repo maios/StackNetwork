@@ -8,16 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		3A1C21AA23C09BEC00D1FD66 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A1C21A923C09BEC00D1FD66 /* Request.swift */; };
-		3A1C4BCA23AE5E8D0012FC6F /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A61F4C723AE58AB00A8E47C /* Nimble.framework */; };
-		3A1C4BCB23AE5E8D0012FC6F /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A61F4C623AE58AB00A8E47C /* Quick.framework */; };
-		3A1C4BCE23AE5F210012FC6F /* Quick.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3A61F4C623AE58AB00A8E47C /* Quick.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		3A1C4BCF23AE5F270012FC6F /* Nimble.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3A61F4C723AE58AB00A8E47C /* Nimble.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		3A1C4BD123AE8D1E0012FC6F /* JSONEncoderSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A1C4BD023AE8D1E0012FC6F /* JSONEncoderSpec.swift */; };
 		3A1C4BD323AE9FA20012FC6F /* StubBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A1C4BD223AE9FA20012FC6F /* StubBehavior.swift */; };
 		3A1C4BD723AEA9BF0012FC6F /* NetworkProviderSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A1C4BD623AEA9BF0012FC6F /* NetworkProviderSpec.swift */; };
 		3A1C4BD923AEAA210012FC6F /* TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A1C4BD823AEAA210012FC6F /* TestHelpers.swift */; };
-		3A1C4BE523AFFEDB0012FC6F /* OHHTTPStubs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A1C4BE423AFFEDB0012FC6F /* OHHTTPStubs.framework */; };
-		3A1C4BE623AFFF2F0012FC6F /* OHHTTPStubs.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3A1C4BE423AFFEDB0012FC6F /* OHHTTPStubs.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		3A1C4BE823AFFF490012FC6F /* NetworkIntegrationSpecs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A1C4BE723AFFF490012FC6F /* NetworkIntegrationSpecs.swift */; };
 		3A1C4BEC23B0114F0012FC6F /* JSONDecoder+KeyPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A1C4BEB23B0114F0012FC6F /* JSONDecoder+KeyPath.swift */; };
 		3A1C4BEE23B011EB0012FC6F /* Response+Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A1C4BED23B011EB0012FC6F /* Response+Map.swift */; };
@@ -55,21 +49,6 @@
 			remoteInfo = StackNetwork;
 		};
 /* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		3A1C4BCD23AE5F180012FC6F /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				3A1C4BE623AFFF2F0012FC6F /* OHHTTPStubs.framework in CopyFiles */,
-				3A1C4BCF23AE5F270012FC6F /* Nimble.framework in CopyFiles */,
-				3A1C4BCE23AE5F210012FC6F /* Quick.framework in CopyFiles */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		3A1C21A923C09BEC00D1FD66 /* Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
@@ -114,9 +93,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3A1C4BCA23AE5E8D0012FC6F /* Nimble.framework in Frameworks */,
-				3A1C4BCB23AE5E8D0012FC6F /* Quick.framework in Frameworks */,
-				3A1C4BE523AFFEDB0012FC6F /* OHHTTPStubs.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -284,7 +260,6 @@
 				3A61F48423AE1F4200A8E47C /* Sources */,
 				3A61F48523AE1F4200A8E47C /* Frameworks */,
 				3A61F48623AE1F4200A8E47C /* Resources */,
-				3A1C4BCC23AE5E960012FC6F /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -302,7 +277,7 @@
 				3A61F48D23AE1F4200A8E47C /* Sources */,
 				3A61F48E23AE1F4200A8E47C /* Frameworks */,
 				3A61F48F23AE1F4200A8E47C /* Resources */,
-				3A1C4BCD23AE5F180012FC6F /* CopyFiles */,
+				3AA845502426366A004C988E /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -372,7 +347,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		3A1C4BCC23AE5E960012FC6F /* ShellScript */ = {
+		3AA845502426366A004C988E /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
