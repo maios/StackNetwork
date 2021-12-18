@@ -119,6 +119,7 @@
 				3A24D7C123C66F1D00EDC931 /* RetryBehavior.swift */,
 			);
 			name = Enums;
+			path = Source;
 			sourceTree = "<group>";
 		};
 		3A1C4BEA23B0113E0012FC6F /* Decoding */ = {
@@ -127,6 +128,7 @@
 				3A1C4BEB23B0114F0012FC6F /* JSONDecoder+KeyPath.swift */,
 			);
 			name = Decoding;
+			path = Source;
 			sourceTree = "<group>";
 		};
 		3A1C4BF623B61EB90012FC6F /* Response */ = {
@@ -137,6 +139,7 @@
 				3A1C4BED23B011EB0012FC6F /* Response+Map.swift */,
 			);
 			name = Response;
+			path = Source;
 			sourceTree = "<group>";
 		};
 		3A1C4BF723B62C160012FC6F /* Resources */ = {
@@ -154,13 +157,14 @@
 				3A24D7C623C67C3200EDC931 /* MultiTarget.swift */,
 			);
 			name = Target;
+			path = Source;
 			sourceTree = "<group>";
 		};
 		3A61F47E23AE1F4200A8E47C = {
 			isa = PBXGroup;
 			children = (
-				3A61F48A23AE1F4200A8E47C /* StackNetwork */,
-				3A61F49523AE1F4200A8E47C /* StackNetworkTests */,
+				3A7BBB6D276E50030095A1D2 /* Tests */,
+				3A7BBB6C276E4FFB0095A1D2 /* Sources */,
 				3A61F48923AE1F4200A8E47C /* Products */,
 				3A61F4C523AE58AB00A8E47C /* Frameworks */,
 			);
@@ -178,7 +182,17 @@
 		3A61F48A23AE1F4200A8E47C /* StackNetwork */ = {
 			isa = PBXGroup;
 			children = (
-				3A61F4A223AE275F00A8E47C /* Source */,
+				3A24D7C523C67C1400EDC931 /* Target */,
+				3A1C4BF623B61EB90012FC6F /* Response */,
+				3A1C4BEA23B0113E0012FC6F /* Decoding */,
+				3A1C4BE923B00E6A0012FC6F /* Enums */,
+				3A61F4BA23AE493F00A8E47C /* Encoding */,
+				3A61F4A323AE277400A8E47C /* NetworkProviderType.swift */,
+				3A61F4A523AE27BB00A8E47C /* NetworkProvider.swift */,
+				3A61F4B623AE2E7B00A8E47C /* Cancellable.swift */,
+				3A1C21A923C09BEC00D1FD66 /* Request.swift */,
+				3A24D7C323C674C800EDC931 /* Aliases.swift */,
+				3A2EBCDC23EDDB440051E223 /* PluginType.swift */,
 				3A61F48B23AE1F4200A8E47C /* StackNetwork.h */,
 				3A61F48C23AE1F4200A8E47C /* Info.plist */,
 			);
@@ -200,24 +214,6 @@
 			path = StackNetworkTests;
 			sourceTree = "<group>";
 		};
-		3A61F4A223AE275F00A8E47C /* Source */ = {
-			isa = PBXGroup;
-			children = (
-				3A24D7C523C67C1400EDC931 /* Target */,
-				3A1C4BF623B61EB90012FC6F /* Response */,
-				3A1C4BEA23B0113E0012FC6F /* Decoding */,
-				3A1C4BE923B00E6A0012FC6F /* Enums */,
-				3A61F4BA23AE493F00A8E47C /* Encoding */,
-				3A61F4A323AE277400A8E47C /* NetworkProviderType.swift */,
-				3A61F4A523AE27BB00A8E47C /* NetworkProvider.swift */,
-				3A61F4B623AE2E7B00A8E47C /* Cancellable.swift */,
-				3A1C21A923C09BEC00D1FD66 /* Request.swift */,
-				3A24D7C323C674C800EDC931 /* Aliases.swift */,
-				3A2EBCDC23EDDB440051E223 /* PluginType.swift */,
-			);
-			path = Source;
-			sourceTree = "<group>";
-		};
 		3A61F4BA23AE493F00A8E47C /* Encoding */ = {
 			isa = PBXGroup;
 			children = (
@@ -226,6 +222,7 @@
 				3A61F4BF23AE4C2C00A8E47C /* ParameterEncoder.swift */,
 			);
 			name = Encoding;
+			path = Source;
 			sourceTree = "<group>";
 		};
 		3A61F4C523AE58AB00A8E47C /* Frameworks */ = {
@@ -236,6 +233,22 @@
 				3A61F4C623AE58AB00A8E47C /* Quick.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3A7BBB6C276E4FFB0095A1D2 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				3A61F48A23AE1F4200A8E47C /* StackNetwork */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		3A7BBB6D276E50030095A1D2 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				3A61F49523AE1F4200A8E47C /* StackNetworkTests */,
+			);
+			path = Tests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -558,7 +571,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
-				INFOPLIST_FILE = StackNetwork/Info.plist;
+				INFOPLIST_FILE = Sources/StackNetwork/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -588,7 +601,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
-				INFOPLIST_FILE = StackNetwork/Info.plist;
+				INFOPLIST_FILE = Sources/StackNetwork/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -614,7 +627,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
-				INFOPLIST_FILE = StackNetworkTests/Info.plist;
+				INFOPLIST_FILE = Tests/StackNetworkTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -639,7 +652,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
-				INFOPLIST_FILE = StackNetworkTests/Info.plist;
+				INFOPLIST_FILE = Tests/StackNetworkTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
