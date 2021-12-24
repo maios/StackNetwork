@@ -20,22 +20,22 @@ class NetworkIntegrationSpecs: QuickSpec {
         beforeEach {
             sut = NetworkProvider<GitHub>()
 
-            OHHTTPStubs.stubRequests(passingTest: isPath("/users/good_cat")) { _ -> OHHTTPStubsResponse in
-                return OHHTTPStubsResponse(data: GitHub.userProfile("good_cat").sampleData, statusCode: 200, headers: nil)
+            HTTPStubs.stubRequests(passingTest: isPath("/users/good_cat")) { _ -> HTTPStubsResponse in
+                return HTTPStubsResponse(data: GitHub.userProfile("good_cat").sampleData, statusCode: 200, headers: nil)
             }
-            OHHTTPStubs.stubRequests(passingTest: isPath("/users/bad_cat")) { _ -> OHHTTPStubsResponse in
-                return OHHTTPStubsResponse(data: GitHub.userProfile("bad_cat").sampleData, statusCode: 404, headers: nil)
+            HTTPStubs.stubRequests(passingTest: isPath("/users/bad_cat")) { _ -> HTTPStubsResponse in
+                return HTTPStubsResponse(data: GitHub.userProfile("bad_cat").sampleData, statusCode: 404, headers: nil)
             }
         }
 
         afterEach {
-            OHHTTPStubs.removeAllStubs()
+            HTTPStubs.removeAllStubs()
         }
 
         describe("A NetworkProvider instance when completed") {
             beforeEach {
-                OHHTTPStubs.stubRequests(passingTest: isPath("/zen")) { _ -> OHHTTPStubsResponse in
-                    return OHHTTPStubsResponse(error: URLError(.networkConnectionLost)).responseTime(1)
+                HTTPStubs.stubRequests(passingTest: isPath("/zen")) { _ -> HTTPStubsResponse in
+                    return HTTPStubsResponse(error: URLError(.networkConnectionLost)).responseTime(1)
                 }
             }
 
@@ -58,7 +58,7 @@ class NetworkIntegrationSpecs: QuickSpec {
             }
 
             it("will return error if network fails") {
-                waitUntil(timeout: 2) { done in
+                waitUntil(timeout: .seconds(2)) { done in
                     _ = sut.request(.zen) { result in
                         expect(result.isSuccess).to(beFalse())
                         done()
@@ -67,7 +67,7 @@ class NetworkIntegrationSpecs: QuickSpec {
             }
 
             it("will return error if request is cancelled") {
-                waitUntil(timeout: 2) { done in
+                waitUntil(timeout: .seconds(2)) { done in
                     let request = sut.request(.zen) { result in
                         if case let .failure(error as URLError) = result {
                             expect(error.code) == .cancelled
@@ -140,7 +140,7 @@ class NetworkIntegrationSpecs: QuickSpec {
             }
 
             it("will inform plugins before request is sent") {
-                waitUntil(timeout: 2) { done in
+                waitUntil(timeout: .seconds(2)) { done in
                     _ = sut.request(.zen) { _ in
                         expect(plugin.request?.urlRequest.url?.absoluteString) == "https://api.github.com/zen"
                         done()
@@ -148,7 +148,7 @@ class NetworkIntegrationSpecs: QuickSpec {
                 }
             }
             it("will inform plugins when result is received") {
-                waitUntil(timeout: 2) { done in
+                waitUntil(timeout: .seconds(2)) { done in
                     _ = sut.request(.zen) { _ in
                         expect(plugin.result).toNot(beNil())
                         done()
@@ -162,11 +162,11 @@ class NetworkIntegrationSpecs: QuickSpec {
 
             beforeEach {
                 var iterationCount = 0
-                OHHTTPStubs.stubRequests(passingTest: isPath("/zen")) { _ -> OHHTTPStubsResponse in
+                HTTPStubs.stubRequests(passingTest: isPath("/zen")) { _ -> HTTPStubsResponse in
                     iterationCount += 1
                     switch iterationCount {
-                    case 1: return OHHTTPStubsResponse(error: URLError(.networkConnectionLost)).responseTime(1)
-                    default: return OHHTTPStubsResponse(data: GitHub.zen.sampleData, statusCode: 200, headers: nil)
+                    case 1: return HTTPStubsResponse(error: URLError(.networkConnectionLost)).responseTime(1)
+                    default: return HTTPStubsResponse(data: GitHub.zen.sampleData, statusCode: 200, headers: nil)
                     }
                 }
             }
@@ -188,7 +188,7 @@ class NetworkIntegrationSpecs: QuickSpec {
                 }
 
                 it("will not retry requests if failed") {
-                    waitUntil(timeout: 2) { done in
+                    waitUntil(timeout: .seconds(2)) { done in
                         _ = sut.request(.zen) { _ in
                             expect(requestCount) == 1
                             done()
@@ -210,7 +210,7 @@ class NetworkIntegrationSpecs: QuickSpec {
                 }
 
                 it("it will adapt request everytime it is retried") {
-                    waitUntil(timeout: 4) { done in
+                    waitUntil(timeout: .seconds(4)) { done in
                         _ = sut.request(.zen) { _ in
                             expect(requestCount) > 1
                             done()
@@ -220,7 +220,7 @@ class NetworkIntegrationSpecs: QuickSpec {
 
                 it("it will retry with given delay interval") {
                     let startDate = Date()
-                    waitUntil(timeout: 4) { done in
+                    waitUntil(timeout: .seconds(4)) { done in
                         _ = sut.request(.zen, completion: { _ in
                             expect(Date().timeIntervalSince(startDate)) >= 2
                             done()

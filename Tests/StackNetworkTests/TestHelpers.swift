@@ -124,7 +124,11 @@ struct TestHelper {
     }
 
     static func getTestMovie() -> Data {
+        #if SWIFT_PACKAGE
+        let url = Bundle.module.url(forResource: "movie", withExtension: "json")!
+        #else
         let url = Bundle(identifier: "com.maimai.StackNetworkTests")!.url(forResource: "movie", withExtension: "json")!
+        #endif
         return try! Data(contentsOf: url, options: .mappedIfSafe)
     }
 }

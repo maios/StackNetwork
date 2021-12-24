@@ -90,7 +90,7 @@ class NetworkProviderSpec: QuickSpec {
 
             it("will delay completion") {
                 let startDate = Date()
-                waitUntil(timeout: 2) { done in
+                waitUntil(timeout: .seconds(2)) { done in
                     _ = sut.request(.zen) { _ in
                         expect(Date().timeIntervalSince(startDate)) >= 1
                         done()
