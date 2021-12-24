@@ -87,10 +87,10 @@ open class NetworkProvider<Target: TargetType>: NetworkProviderType {
         switch target.task {
         case .requestPlain: break
         case .requestData(let data): request.httpBody = data
-        case .requestEncodable(let encodable):
-            try encode(request: &request, with: encodable.0, using: encodable.encoder)
-        case .requestParameters(let encodable):
-            try encode(request: &request, with: encodable.0, using: encodable.encoder)
+        case let .requestEncodable(encodable, encoder):
+            try encode(request: &request, with: encodable, using: encoder)
+        case let .requestParameters(encodable, encoder):
+            try encode(request: &request, with: encodable, using: encoder)
         }
 
         return request
