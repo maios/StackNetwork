@@ -89,7 +89,6 @@ extension JSONDecoder {
                 do {
                     return try self.decode(type, from: data)
                 } catch {
-                    NSLog("MMM Shit - \(error)")
                     return nil
                 }
             }.first
